@@ -60,6 +60,16 @@ async function run() {
       res.send(result);
     });
 
+    // getting updated value
+    app.get("/users/:id", async (req, res) => {
+      const id = req.params.id;
+      console.log(id);
+      // const cursor = userCollection.find()
+      const query = { _id: new ObjectId(id) };
+      const result = await userCollection.findOne(query);
+      res.send(result);
+    });
+
     // put
     app.put("/users/:id", async (req, res) => {
       const id = req.params.id;
@@ -82,73 +92,6 @@ async function run() {
       );
       res.send(result);
     });
-
-    // app.get("/users/:id", async (req, res) => {
-    //   const id = req.params.id;
-    //   const query = { _id: new ObjectId(id) };
-    //   const result = await userCollection.findOne(query);
-    //   res.send(result);
-    // });
-
-    //
-    // app.get("/users", async (req, res) => {
-    //   const cursor = userCollection.find();
-    //   const result = await cursor.toArray();
-    //   res.send(result);
-    // });
-
-    // app.get("/users/:id", async (req, res) => {
-    //   const id = req.params.id;
-    //   const query = { _id: new ObjectId(id) };
-    //   const result = await userCollection.findOne(query);
-    //   res.send(result);
-    // });
-
-    // // Put -----------------
-    // app.put("/users/:id", async (req, res) => {
-    //   const id = req.params.id;
-    //   const user = req.body;
-    //   console.log(user);
-    //   const filter = { _id: new ObjectId(id) };
-    //   const options = { upsert: true };
-    //   const updatedUser = {
-    //     $set: {
-    //       name: user.name,
-    //       email: user.email,
-    //     },
-    //   };
-    //   const result = await userCollection.updateOne(
-    //     filter,
-    //     updatedUser,
-    //     options
-    //   );
-    //   res.send(result);
-    // });
-
-    // // Post -----------------
-    // app.post("/users", async (req, res) => {
-    //   const user = req.body;
-    //   const result = await userCollection.insertOne(user);
-    //   res.send(result);
-    // });
-
-    //todo // Delete -----------------
-    // app.delete("/users/:id", async (req, res) => {
-    //   const id = req.params.id;
-    //   console.log("please delete", id);
-    //   const query = { _id: new ObjectId(id) };
-    //   const result = await userCollection.deleteOne(query);
-    //   res.send(result);
-    // });
-
-    // const usersCollection = client.db("usersDB").collection("users");
-
-    // app.post("/users", async (req, res) => {
-    //   const user = req.body;
-    //   console.log("new user", user);
-    //   const result = await userCollection.insertOne(user);
-    //   res.send(result);
-    // });
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
